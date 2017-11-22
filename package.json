@@ -34,7 +34,12 @@
     "@feathersjs/feathers": "^3.0.1",
     "compression": "^1.7.1",
     "cors": "^2.8.4",
+    "feathers-sequelize": "^2.4.0",
     "helmet": "^3.9.0",
+    "pg": "^7.4.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.22.11",
+    "sequelize-cli": "^3.1.0",
     "serve-favicon": "^2.4.5",
     "winston": "^2.4.0"
   },
