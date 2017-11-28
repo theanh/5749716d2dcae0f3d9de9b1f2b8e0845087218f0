@@ -26,9 +26,9 @@ module.exports = function (app) {
       allowNull: true
     },
     coin: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: true,
-      defaultValue: 1000
+      defaultValue: 10
     }
   }, {
     hooks: {
