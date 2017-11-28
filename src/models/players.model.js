@@ -24,6 +24,11 @@ module.exports = function (app) {
     name: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    coin: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 1000
     }
   }, {
     hooks: {

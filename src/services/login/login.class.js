@@ -5,20 +5,35 @@ class Service {
   }
 
   find (params) {
-    const { query: { deviceId } } = params;
+    const { query: { deviceId, facebookId } } = params;
+    const sequelizeClient = this.app.get('sequelizeClient');
+    const { players } = sequelizeClient.models;
 
-    return this.app.service('players').find({
-      query: {
-        deviceId
-      }
-    })
-      .then(players => {
-        if (players.total === 0)
-          return this.app.service('players').create({
-            deviceId
-          });
+    if (facebookId) {
+      return players
+        .findOne({ where: { facebookId }})
+        .then(p => {
+          if (!p) {
+            return players
+              .findOne({ where: { deviceId }})
+              .then(p => {
+                if (!p) return players.create({ deviceId, facebookId });
 
-        return players.data[0];
+                return p.update({ facebookId })
+                  .then(p);
+              });
+          }
+
+          return p;
+        });
+    }
+
+    return players
+      .findOne({ where: { deviceId }})
+      .then(p => {
+        if (!p) return players.create({ deviceId });
+
+        return p;
       });
   }
 }

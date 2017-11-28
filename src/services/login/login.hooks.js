@@ -12,10 +12,12 @@ module.exports = {
 
   after: {
     all: [],
-    find: [ hook => {
-      const { result } = hook;
-      delete result.id;
-    } ],
+    find: [
+      hook => {
+        const { result } = hook;
+        delete result.id;
+      }
+    ],
     get: [],
     create: [],
     update: [],
