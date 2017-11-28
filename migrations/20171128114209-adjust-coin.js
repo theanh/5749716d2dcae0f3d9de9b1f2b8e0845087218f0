@@ -4,12 +4,13 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.describeTable('players').then(attributes => {
       if ( attributes.coin ) {
-        return queryInterface.changeColumn(
-          'players',
-          'coin',
-          Sequelize.FLOAT, {
-            allowNull: true,
-            defaultValue: 10
+        return queryInterface.removeColumn('players', 'coin')
+          .then(() => {
+            return queryInterface.addColumn('players', 'coin', {
+              type: Sequelize.FLOAT,
+              allowNull: true,
+              defaultValue: 10
+            });
           });
       }
     });
