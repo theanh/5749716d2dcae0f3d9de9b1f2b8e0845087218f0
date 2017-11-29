@@ -35,6 +35,11 @@ module.exports = function (app) {
       allowNull: true,
       defaultValue: 0
     },
+    jackPot: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      defaultValue: 0
+    },
     level: {
       type: DataTypes.INTEGER,
       allowNull: false,

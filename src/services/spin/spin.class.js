@@ -27,7 +27,7 @@ class Service {
 
         if (p) {
           const win = parseFloat(generateLottle()) * 1000;
-          const currentCoin = parseFloat(p.coin);
+          const currentCoin = parseFloat(p.coin) || 0;
           return p.update({ coin: currentCoin + win })
             .then(() => response.handleSuccess(p));
         }

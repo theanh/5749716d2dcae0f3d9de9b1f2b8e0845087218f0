@@ -33,9 +33,21 @@ class Service {
       .then(p => {
 
         if (p) {
-          const win = parseFloat(calcBonus(totalBet));
           const currentCoin = parseFloat(p.coin) || 0;
-          return p.update({ coin: currentCoin + win })
+          const currentJackPot = parseFloat(p.jackPot) || 0;
+          const currentDiamond = parseFloat(p.diamond) || 0;
+          const bonus = calcBonus(
+            currentCoin,
+            currentJackPot,
+            currentDiamond,
+            totalBet
+          );
+
+          return p.update({
+            coin: bonus.coin,
+            jackPot: bonus.jackPot,
+            diamond: bonus.diamond
+          })
             .then(() => response.handleSuccess({ player: p, payedTable }));
         }
 
