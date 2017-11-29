@@ -1,15 +1,16 @@
 /* eslint-disable no-unused-vars */
 const response = require('../../helpers/response');
+const calcBonus = require('../../helpers/calc-bonus');
 const weightedRand = require('../../helpers/random');
 
-const rands = [10, 12, 15, 20, 25, 50, 75, 100, 120, 150, 250, 500];
+const rands = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ];
 const weiths = [0.1, 0.3, 0.4, 0.5, 0.6, 0.1, 0.7, 0.9, 0.4, 0.3, 0.2, 0.3];
 const rand = {};
 rands.map((r, i) => {
   rand[r] = weiths[i];
 });
 
-const generateLottle = weightedRand(rand);
+const generate = weightedRand(rand);
 
 class Service {
   constructor (app, options) {
@@ -18,6 +19,11 @@ class Service {
   }
 
   get (uuid, params) {
+    const row1 = [generate(), generate(), generate(), generate(), generate()];
+    const row2 = [generate(), generate(), generate(), generate(), generate()];
+    const row3 = [generate(), generate(), generate(), generate(), generate()];
+    const payedTable = { row1, row2, row3 };
+
     const sequelizeClient = this.app.get('sequelizeClient');
     const { players } = sequelizeClient.models;
 
@@ -26,10 +32,10 @@ class Service {
       .then(p => {
 
         if (p) {
-          const win = parseFloat(generateLottle());
+          const win = parseFloat(calcBonus());
           const currentCoin = parseFloat(p.coin);
           return p.update({ coin: currentCoin + win })
-            .then(() => response.handleSuccess(p));
+            .then(() => response.handleSuccess({ player: p, payedTable }));
         }
 
         return Promise.resolve(response.handleError());

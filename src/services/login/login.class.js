@@ -1,3 +1,5 @@
+const response = require('../../helpers/response');
+
 class Service {
   constructor (app, options) {
     this.app = app || {};
@@ -20,20 +22,23 @@ class Service {
                 if (!p) return players.create({ deviceId, facebookId });
 
                 return p.update({ facebookId })
-                  .then(p);
+                  .then(() => response.handleSuccess(p));
               });
           }
 
-          return p;
+          return response.handleSuccess(p);
         });
     }
 
     return players
       .findOne({ where: { deviceId }})
       .then(p => {
-        if (!p) return players.create({ deviceId });
+        if (!p) {
+          return players.create({ deviceId })
+            .then(p => response.handleSuccess(p));
+        }
 
-        return p;
+        return response.handleSuccess(p);
       });
   }
 }
