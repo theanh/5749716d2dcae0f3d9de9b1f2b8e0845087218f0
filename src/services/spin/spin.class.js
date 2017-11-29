@@ -17,18 +17,21 @@ function weightedRand(spec) {
       table.push(i);
     }
   }
+
   return function() {
     return table[Math.floor(Math.random() * table.length)];
   };
 }
 
-function weightedRand2(spec) {
-  var i, sum=0, r=Math.random();
-  for (i in spec) {
-    sum += spec[i];
-    if (r <= sum) return i;
-  }
-}
+const generateLottle = weightedRand(rand);
+
+// function weightedRand2(spec) {
+//   var i, sum=0, r=Math.random();
+//   for (i in spec) {
+//     sum += spec[i];
+//     if (r <= sum) return i;
+//   }
+// }
 
 class Service {
   constructor (app, options) {
@@ -36,25 +39,7 @@ class Service {
     this.options = options || {};
   }
 
-  find (params) {
-    return Promise.resolve([]);
-  }
-
-  get (id, params) {
-    return Promise.resolve({
-      id, text: `A new message with ID: ${id}!`
-    });
-  }
-
-  create (data, params) {
-    if (Array.isArray(data)) {
-      return Promise.all(data.map(current => this.create(current)));
-    }
-
-    return Promise.resolve(data);
-  }
-
-  update (uuid, data, params) {
+  get (uuid, params) {
     const sequelizeClient = this.app.get('sequelizeClient');
     const { players } = sequelizeClient.models;
 
@@ -63,7 +48,7 @@ class Service {
       .then(p => {
 
         if (p) {
-          const win = parseFloat(weightedRand2(rand));
+          const win = parseFloat(generateLottle());
           const currentCoin = parseFloat(p.coin);
           return p.update({ coin: currentCoin + win })
             .then(p);
@@ -71,14 +56,6 @@ class Service {
 
         return Promise.resolve('false');
       });
-  }
-
-  patch (id, data, params) {
-    return Promise.resolve(data);
-  }
-
-  remove (id, params) {
-    return Promise.resolve({ id });
   }
 }
 

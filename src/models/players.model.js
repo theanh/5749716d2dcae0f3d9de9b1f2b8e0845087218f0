@@ -29,6 +29,16 @@ module.exports = function (app) {
       type: DataTypes.FLOAT,
       allowNull: true,
       defaultValue: 10
+    },
+    diamond: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      defaultValue: 0
+    },
+    level: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
     }
   }, {
     hooks: {
