@@ -36,17 +36,21 @@ class Service {
           const currentCoin = parseFloat(p.coin) || 0;
           const currentJackPot = parseFloat(p.jackPot) || 0;
           const currentDiamond = parseFloat(p.diamond) || 0;
+          const currentFlame = parseFloat(p.flame) || 0;
           const bonus = calcBonus(
             currentCoin,
             currentJackPot,
             currentDiamond,
+            currentFlame,
+            payedTable,
             totalBet
           );
 
           return p.update({
             coin: bonus.coin,
             jackPot: bonus.jackPot,
-            diamond: bonus.diamond
+            diamond: bonus.diamond,
+            flame: bonus.flame
           })
             .then(() => response.handleSuccess({ player: p, payedTable }));
         }

@@ -40,6 +40,11 @@ module.exports = function (app) {
       allowNull: true,
       defaultValue: 0
     },
+    flame: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
+    },
     level: {
       type: DataTypes.INTEGER,
       allowNull: false,

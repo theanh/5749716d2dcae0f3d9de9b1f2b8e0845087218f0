@@ -9,7 +9,7 @@ rands.map((r, i) => {
   rand[r] = weiths[i];
 });
 
-const generateLottle = weightedRand(rand);
+const spin = weightedRand(rand);
 
 class Service {
   constructor (app, options) {
@@ -26,7 +26,7 @@ class Service {
       .then(p => {
 
         if (p) {
-          const spun = parseFloat(generateLottle()) * 1000;
+          const spun = parseFloat(spin()) * 1000;
           const currentCoin = parseFloat(p.coin) || 0;
           return p.update({ coin: currentCoin + spun })
             .then(() => response.handleSuccess({ player: p, spun }));
