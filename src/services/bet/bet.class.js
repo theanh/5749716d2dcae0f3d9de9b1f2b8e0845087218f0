@@ -24,6 +24,7 @@ class Service {
     const row3 = [generate(), generate(), generate(), generate(), generate()];
     const payedTable = { row1, row2, row3 };
 
+    const { query: { totalBet } } = params;
     const sequelizeClient = this.app.get('sequelizeClient');
     const { players } = sequelizeClient.models;
 
@@ -32,8 +33,8 @@ class Service {
       .then(p => {
 
         if (p) {
-          const win = parseFloat(calcBonus());
-          const currentCoin = parseFloat(p.coin);
+          const win = parseFloat(calcBonus(totalBet));
+          const currentCoin = parseFloat(p.coin) || 0;
           return p.update({ coin: currentCoin + win })
             .then(() => response.handleSuccess({ player: p, payedTable }));
         }

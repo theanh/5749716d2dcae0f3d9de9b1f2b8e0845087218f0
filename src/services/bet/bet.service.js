@@ -1,21 +1,21 @@
-// Initializes the `pay` service on path `/pay`
-const createService = require('./pay.class.js');
-const hooks = require('./pay.hooks');
+// Initializes the `bet` service on path `/bet`
+const createService = require('./bet.class.js');
+const hooks = require('./bet.hooks');
 
 module.exports = function (app) {
 
   const paginate = app.get('paginate');
 
   const options = {
-    name: 'pay',
+    name: 'bet',
     paginate
   };
 
   // Initialize our service with any options it requires
-  app.use('/pay', createService(app, options));
+  app.use('/bet', createService(app, options));
 
   // Get our initialized service so that we can register hooks and filters
-  const service = app.service('pay');
+  const service = app.service('bet');
 
   service.hooks(hooks);
 };

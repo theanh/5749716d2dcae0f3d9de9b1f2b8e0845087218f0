@@ -1,5 +1,5 @@
-function calcBonus() {
-  return 100;
+function calcBonus(bet) {
+  return (parseFloat(bet) || 0) + 100;
   return 0;
 }
 

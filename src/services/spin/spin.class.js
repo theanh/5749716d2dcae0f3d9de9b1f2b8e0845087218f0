@@ -26,7 +26,7 @@ class Service {
       .then(p => {
 
         if (p) {
-          const win = parseFloat(generateLottle());
+          const win = parseFloat(generateLottle()) * 1000;
           const currentCoin = parseFloat(p.coin);
           return p.update({ coin: currentCoin + win })
             .then(() => response.handleSuccess(p));
