@@ -1,15 +1,6 @@
 /* eslint-disable no-unused-vars */
 const response = require('../../helpers/response');
-const {weightedRand} = require('../../helpers/random');
-
-const rands = [10, 12, 15, 20, 25, 50, 75, 100, 120, 150, 250, 500];
-const weiths = [0.1, 0.3, 0.4, 0.5, 0.6, 0.1, 0.7, 0.9, 0.4, 0.3, 0.2, 0.3];
-const rand = {};
-rands.map((r, i) => {
-  rand[r] = weiths[i];
-});
-
-const spin = weightedRand(rand);
+const resolveSpin = require('../../helpers/resolve-spin');
 
 class Service {
   constructor (app, options) {
@@ -26,7 +17,7 @@ class Service {
       .then(p => {
 
         if (p) {
-          const spun = parseFloat(spin()) * 1000;
+          const spun = parseFloat(resolveSpin()) * 1000;
           const currentCoin = parseFloat(p.coin) || 0;
           return p.update({ coin: currentCoin + spun })
             .then(() => response.handleSuccess({ player: p, spun }));

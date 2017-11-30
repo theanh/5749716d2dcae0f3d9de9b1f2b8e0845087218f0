@@ -2,6 +2,21 @@ const PERCENTAGE_FOR_JACKPOT = (7 / 100);
 const PERCENTAGE_FOR_DIAMOND = (25 / 100);
 const MAXIMUM_OF_FLAME = 20;
 
+const SPIN = {
+  10: 0.15,
+  12: 0.15,
+  15: 0.1,
+  20: 0.05,
+  25: 0.05,
+  50: 0.2,
+  75: 0.1,
+  100: 0.05,
+  120: 0.05,
+  150: 0.05,
+  250: 0.025,
+  500: 0.025
+};
+
 const RULES = {
   0: 0.6, // No win
   1: 0.1,
@@ -82,6 +97,7 @@ module.exports = {
   PERCENTAGE_FOR_JACKPOT,
   PERCENTAGE_FOR_DIAMOND,
   MAXIMUM_OF_FLAME,
+  SPIN,
   RULES,
   PAYED_TABLE
 };
