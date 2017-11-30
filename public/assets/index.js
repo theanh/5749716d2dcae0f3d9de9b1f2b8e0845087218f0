@@ -5,12 +5,7 @@ const $ = window.$;
 const Handlebars = window.Handlebars;
 const root = '.root';
 
-function parseResponse(res) {
-  if (res.status === 'ok') return res.data;
-
-  return null;
-}
-
+// Template rendering.
 function render(res) {
   const data = parseResponse(res);
 
@@ -21,6 +16,9 @@ function render(res) {
 
   $( spinPanel ).appendTo('.col1');
   $( betPanel ).appendTo('.col2');
+
+  handleFormSubmit(document.forms.spinRule);
+  handleFormSubmit(document.forms.betRule);
 }
 
 function renderSpin(data) {
@@ -33,7 +31,27 @@ function renderBet(data) {
   return renderTmpl('rule-tmpl', rules);
 }
 
+// Events handling.
+function handleFormSubmit(form) {
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const obj ={};
+    for(var i = 0 ; i < form.elements.length ; i++) {
+      var item = form.elements.item(i);
+      if (item.name) obj[item.name] = item.value;
+    }
+
+    console.log(obj);
+  });
+}
+
 // Utils
+function parseResponse(res) {
+  if (res.status === 'ok') return res.data;
+
+  return null;
+}
+
 function renderTmpl(id, data) {
   const source   = document.getElementById(id).innerHTML;
   const template = Handlebars.compile(source);
