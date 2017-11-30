@@ -1,5 +1,7 @@
 // Initializes the `settings` service on path `/settings`
-const createService = require('feathers-sequelize');
+// const createService = require('feathers-sequelize');
+
+const createService = require('./settings.class');
 const createModel = require('../../models/settings.model');
 const hooks = require('./settings.hooks');
 const filters = require('./settings.filters');
