@@ -1,6 +1,6 @@
 # slotgame
 
-> 
+>
 
 ## About
 
@@ -26,6 +26,12 @@ Getting up and running is as easy as 1, 2, 3.
 ## Testing
 
 Simply run `npm test` and all your tests in the `test/` directory will be run.
+
+## Deploying
+```
+$ NODE_ENV=production node_modules/.bin/sequelize db:migrate
+$ NODE_ENV=production node_modules/.bin/sequelize db:seed:all
+```
 
 ## Scaffolding
 

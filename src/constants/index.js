@@ -24,7 +24,7 @@ const RULES = {
   3: 0.2
 };
 
-const PAYED_TABLE = {
+const PAID_TABLE = {
   0: {
     1: 0,
     2: 5,
@@ -99,5 +99,5 @@ module.exports = {
   MAXIMUM_OF_FLAME,
   SPIN,
   RULES,
-  PAYED_TABLE
+  PAID_TABLE
 };

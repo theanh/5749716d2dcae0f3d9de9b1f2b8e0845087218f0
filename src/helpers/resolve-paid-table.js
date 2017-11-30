@@ -1,4 +1,4 @@
-const {PAYED_TABLE} = require('../constants');
+const {PAID_TABLE} = require('../constants');
 
 function countItemInArray(arr) {
   const counts = {};
@@ -15,7 +15,7 @@ function resolvePaidRow(columns) {
   let pointAwardedPerRow = 0;
   const countOfItems = countItemInArray(columns);
   Object.keys(countOfItems).forEach((countOfItem, count) => {
-    pointAwardedPerRow += PAYED_TABLE[countOfItem][`${count}`] || 0;
+    pointAwardedPerRow += PAID_TABLE[countOfItem][`${count}`] || 0;
   });
 
   return pointAwardedPerRow;

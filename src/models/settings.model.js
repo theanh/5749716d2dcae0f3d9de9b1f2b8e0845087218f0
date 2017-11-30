@@ -5,50 +5,30 @@ const DataTypes = Sequelize.DataTypes;
 
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
-  const players = sequelizeClient.define('players', {
-    uuid: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      allowNull: false
-    },
-    deviceId: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false
-    },
-    facebookId: {
-      type: DataTypes.STRING,
-      unique: true,
+  const settings = sequelizeClient.define('settings', {
+    spin: {
+      type: DataTypes.JSON,
       allowNull: true
     },
-    name: {
-      type: DataTypes.STRING,
+    rule: {
+      type: DataTypes.JSON,
       allowNull: true
     },
-    coin: {
-      type: DataTypes.FLOAT,
-      allowNull: true,
-      defaultValue: 10
+    paidTable: {
+      type: DataTypes.JSON,
+      allowNull: true
     },
-    diamond: {
+    percentageForJackpot: {
       type: DataTypes.FLOAT,
-      allowNull: true,
-      defaultValue: 0
+      defaultValue: 0.75
     },
-    jackPot: {
+    percentageForDiamond: {
       type: DataTypes.FLOAT,
-      allowNull: true,
-      defaultValue: 0
+      defaultValue: 0.25
     },
-    flame: {
+    maximumOfFlame: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    level: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 1
+      defaultValue: 20
     }
   }, {
     hooks: {
@@ -58,10 +38,10 @@ module.exports = function (app) {
     }
   });
 
-  players.associate = function (models) { // eslint-disable-line no-unused-vars
+  settings.associate = function (models) { // eslint-disable-line no-unused-vars
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
   };
 
-  return players;
+  return settings;
 };
