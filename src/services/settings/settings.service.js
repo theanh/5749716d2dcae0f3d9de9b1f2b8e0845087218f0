@@ -4,7 +4,6 @@
 const createService = require('./settings.class');
 const createModel = require('../../models/settings.model');
 const hooks = require('./settings.hooks');
-const filters = require('./settings.filters');
 
 module.exports = function () {
   const app = this;
@@ -24,8 +23,4 @@ module.exports = function () {
   const service = app.service('settings');
 
   service.hooks(hooks);
-
-  if (service.filter) {
-    service.filter(filters);
-  }
 };

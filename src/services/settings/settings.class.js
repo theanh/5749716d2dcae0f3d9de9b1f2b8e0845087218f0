@@ -8,10 +8,19 @@ class Service {
     this.options = options || {};
   }
 
+  find (params) {
+    const { Model } = this.options;
+    return Model
+      .findOne()
+      .then(p => {
+        return response.handleSuccess(p);
+      });
+  }
+
   get (id, params) {
     const paidTable = resolveBet();
 
-    const { query: { totalBet } } = params;
+    // const { query: { totalBet } } = params;
     const { Model } = this.options;
 
     return Model
@@ -49,23 +58,23 @@ class Service {
         //     );
         // }
 
-          return p.update({
-            coin: bonus.coin,
-            jackPot: bonus.jackPot,
-            diamond: bonus.diamond,
-            flame: bonus.flame
-          })
-            .then(() =>
-              response.handleSuccess(
-                {
-                  player: p,
-                  bonus,
-                  paidTable
-                }
-              )
-            );
-
-        return Promise.resolve(response.handleError());
+        //   return p.update({
+        //     coin: bonus.coin,
+        //     jackPot: bonus.jackPot,
+        //     diamond: bonus.diamond,
+        //     flame: bonus.flame
+        //   })
+        //     .then(() =>
+        //       response.handleSuccess(
+        //         {
+        //           player: p,
+        //           bonus,
+        //           paidTable
+        //         }
+        //       )
+        //     );
+        //
+        // return Promise.resolve(response.handleError());
       });
   }
 }

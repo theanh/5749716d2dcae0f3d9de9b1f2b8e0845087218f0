@@ -5,8 +5,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
     <title>Slot game</title>
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="stylesheet" href="//cdn.rawgit.com/feathersjs/feathers-chat/v0.1.0/public/base.css">
-    <link rel="stylesheet" href="//cdn.rawgit.com/feathersjs/feathers-chat/v0.1.0/public/chat.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   </head>
   <body>
     <main class="login container">
@@ -17,22 +16,87 @@
       </div>
       <div class="row">
         <div class="col-12 col-6-tablet push-3-tablet col-4-desktop push-4-desktop text-center">
-          <!-- <form class="form" method="post" action="/authentication">
-            <fieldset>
-              <input type="hidden" name="strategy" value="local">
-            </fieldset>
-            <fieldset>
-              <input class="block" type="email" name="email" placeholder="email">
-            </fieldset>
-            <fieldset>
-              <input class="block" type="password" name="password" placeholder="password">
-            </fieldset>
-            <button type="submit" class="button button-primary block login">
-              Login
-            </button>
-          </form> -->
+          <div id="root" class="root">
+            <div class="row">
+              <div class="col-xs-6 col1"></div>
+              <div class="col-xs-6 col2"></div>
+            <div>
+          </div>
+        </div>
+    </div>
+    </main>
+    <script type="text/javascript" src="//unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script id="spin-tmpl" type="text/x-handlebars-template">
+      <div class="panel panel-default">
+        <div class="panel-heading">Spin</div>
+        <div class="panel-body">
+          <form class="form-horizontal">
+            {{#each this}}
+              <div class="form-group">
+                <label class="col-sm-4 control-label">{{label}} K</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" value="{{value}}" />
+                </div>
+              </div>
+            {{/each}}
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Change</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-    </main>
+    </script>
+
+    <script id="rule-tmpl" type="text/x-handlebars-template">
+      <div class="panel panel-default">
+        <div class="panel-heading">Bet</div>
+        <div class="panel-body">
+          <form class="form-horizontal">
+            {{#each this}}
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Rule #{{label}}</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" value="{{value}}" />
+                </div>
+              </div>
+            {{/each}}
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Change</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </script>
+
+    <script type="text/javascript" src="assets/index.js"></script>
+    <script type="text/javascript">
+      const accessToken = window.localStorage['feathers-jwt'];
+      if (accessToken) {
+        const url = 'http://localhost:3030';
+        const rest = feathers.rest;
+
+        const restClient = rest(url).fetch(window.fetch.bind(window));
+
+        const app = feathers()
+          .configure(restClient);
+        const setting = app.service('settings').find({
+          headers: { 'Authorization': accessToken }
+        });
+
+        setting.then(function(result) {
+          render(result);
+        }).catch(function(error) {
+          console.error('Error authenticating!', error);
+        });
+      }
+    </script>
   </body>
 </html>
