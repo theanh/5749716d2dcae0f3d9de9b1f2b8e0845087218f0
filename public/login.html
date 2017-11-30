@@ -3,29 +3,56 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
-    <title>Feathers Chat</title>
+    <title>Slot game</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="//cdn.rawgit.com/feathersjs/feathers-chat/v0.1.0/public/base.css">
     <link rel="stylesheet" href="//cdn.rawgit.com/feathersjs/feathers-chat/v0.1.0/public/chat.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.1/superagent.min.js"></script>
+    <script type="text/javascript" src="//unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
+    <script type="text/javascript">
+      const rest = feathers.rest;
+      const authentication = feathers.authentication;
+
+      const restClient = rest('http://localhost:3030').superagent(superagent);
+
+      const app = feathers()
+        .configure(restClient)
+        .configure(authentication({ storage: window.localStorage }));
+
+      function login() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        return app.authenticate({
+          strategy: 'local',
+          email: email,
+          password: password
+        }).then(function(result){
+          location.href = '/dashboard.html';
+        }).catch(function(error){
+          console.error('Error authenticating!', error);
+        });
+      }
+    </script>
   </head>
   <body>
     <main class="login container">
       <div class="row">
         <div class="col-12 col-6-tablet push-3-tablet text-center">
-          <h1 class="font-100">Welcome Back</h1>
+          <h1 class="font-100">Welcome</h1>
         </div>
       </div>
       <div class="row">
         <div class="col-12 col-6-tablet push-3-tablet col-4-desktop push-4-desktop text-center">
-          <form class="form" method="post" action="/authentication">
+          <form class="form" method="post" onsubmit="event.preventDefault(); login();">
             <fieldset>
               <input type="hidden" name="strategy" value="local">
             </fieldset>
             <fieldset>
-              <input class="block" type="email" name="email" placeholder="email">
+              <input class="block" type="email" name="email" id="email" placeholder="email">
             </fieldset>
             <fieldset>
-              <input class="block" type="password" name="password" placeholder="password">
+              <input class="block" type="password" name="password" id="password" placeholder="password">
             </fieldset>
             <button type="submit" class="button button-primary block login">
               Login
