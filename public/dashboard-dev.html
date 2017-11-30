@@ -80,7 +80,7 @@
     <script type="text/javascript">
       const accessToken = window.localStorage['feathers-jwt'];
       if (accessToken) {
-        const url = 'https://morning-brushlands-47867.herokuapp.com';
+        const url = 'http://localhost:3030';
         const rest = feathers.rest;
 
         const restClient = rest(url).fetch(window.fetch.bind(window));
