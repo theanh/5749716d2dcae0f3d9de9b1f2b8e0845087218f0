@@ -1,4 +1,7 @@
 // Algorithm https://en.wikipedia.org/wiki/Rejection_sampling
+// References
+// 1. https://softwareengineering.stackexchange.com/questions/150616/return-random-list-item-by-its-weight
+// 2. http://codetheory.in/weighted-biased-random-number-generation-with-javascript-based-on-probability/
 function weightedRand(spec) {
   var i, j, table=[];
   for (i in spec) {
@@ -15,12 +18,13 @@ function weightedRand(spec) {
   };
 }
 
-// function weightedRand2(spec) {
-//   var i, sum=0, r=Math.random();
-//   for (i in spec) {
-//     sum += spec[i];
-//     if (r <= sum) return i;
-//   }
+// function generateRandom(items) {
+//   return () => items[Math.floor(Math.random() * items.length)];
+//   // var i, sum=0, r=Math.random();
+//   // for (i in spec) {
+//   //   sum += spec[i];
+//   //   if (r <= sum) return i;
+//   // }
 // }
 
-module.exports = weightedRand;
+module.exports = {weightedRand};

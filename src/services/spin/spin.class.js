@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const response = require('../../helpers/response');
-const weightedRand = require('../../helpers/random');
+const {weightedRand} = require('../../helpers/random');
 
 const rands = [10, 12, 15, 20, 25, 50, 75, 100, 120, 150, 250, 500];
 const weiths = [0.1, 0.3, 0.4, 0.5, 0.6, 0.1, 0.7, 0.9, 0.4, 0.3, 0.2, 0.3];

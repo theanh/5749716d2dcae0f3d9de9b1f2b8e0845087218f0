@@ -1,3 +1,4 @@
+const resolvePaidTable = require('./resolve-paid-table');
 const calcJackPot = require('./calc-jackpot');
 const calcDiamond = require('./calc-diamond');
 const {MAXIMUM_OF_FLAME} = require('../constants');
@@ -8,8 +9,8 @@ const {MAXIMUM_OF_FLAME} = require('../constants');
  * @param float currentCoin
  * @param float currentJackPot
  * @param float currentDiamond
- * @param array payedTable
- * @param float|0 bet
+ * @param array paidTable
+ * @param float|0 totalBet
  *
  * @return Object
  */
@@ -18,20 +19,22 @@ function calcBonus(
   currentJackPot,
   currentDiamond,
   currentFlame,
-  payedTable,
-  bet = 0
+  paidTable,
+  totalBet = 0
 ) {
   let coin, jackPot, diamond, flame;
+  const bet = parseFloat(totalBet) || 0;
 
-  // @TODO: need to find the rule of calculating bet result.
-  const totalBonus = (parseFloat(bet) || 0) + 100;
+  // @TODO: need to find the rule of calculate bonus on bet amount.
+  const paidAmount = resolvePaidTable(paidTable);
+  const totalBonus = bet + paidAmount;
 
   const receivedJackPot = calcJackPot(totalBonus);
   const receivedDiamond = calcDiamond(totalBonus);
 
   const remainedBonus = totalBonus - (receivedDiamond + receivedJackPot);
 
-  coin = currentCoin + remainedBonus;
+  coin = currentCoin + remainedBonus - bet;
   diamond = currentDiamond + receivedDiamond;
   jackPot = currentJackPot + receivedJackPot;
 
