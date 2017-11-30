@@ -6,5 +6,29 @@
     "default": 10,
     "max": 50
   },
-  "postgres": "postgres://postgres:deadface@pg:5432/slotgame"
+  "postgres": "postgres://postgres:deadface@pg:5432/slotgame",
+  "authentication": {
+    "secret": "f5a45f578b14d6f4988ba8939954422623f984e88e03d3761c37922db492b80b18627a1790822ae7d088379eabef67349287363bc78a32735d34414d8442b7a5888aef66b7ff7bc32c219a4a82d34cb5c7f736f1c7d62f5248c0128aef4594304db989e5eaf5f3065d3de377c346e5714baef1af12264cc80930633fe998fa119b51306f77bc48b8bb43ec1d28e15fd7a8b93fcc45d3b163dce186fd6aaa046d42e65ae97b0492c301276518a068438ad0a0d1c7ac05aa8e5fe749d4a5e95f5bf465f6f2128a8e2c3ad47e47b376d0b9267eb96f6db9922644343cf02f0256444cc80eafaf5e2a3d81087228b9f0dcb7a303ee70aedf2e335f2458e9f4353ab6",
+    "strategies": [
+      "jwt",
+      "local"
+    ],
+    "path": "/authentication",
+    "service": "users",
+    "jwt": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "subject": "anonymous",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "entity": "user",
+      "usernameField": "email",
+      "passwordField": "password"
+    }
+  }
 }
