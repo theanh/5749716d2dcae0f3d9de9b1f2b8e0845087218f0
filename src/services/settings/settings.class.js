@@ -8,7 +8,7 @@ class Service {
     this.options = options || {};
   }
 
-  find (params) {
+  find(params) {
     const { Model } = this.options;
     return Model
       .findOne()
@@ -17,64 +17,33 @@ class Service {
       });
   }
 
-  get (id, params) {
+  update(id, params) {
     const paidTable = resolveBet();
 
-    // const { query: { totalBet } } = params;
     const { Model } = this.options;
 
     return Model
       .findOne({ where: { id }})
-      .then(p => {
-        return response.handleSuccess(p);
-        // if (p) {
-        //   const currentCoin = parseFloat(p.coin) || 0;
-        //   const currentJackPot = parseFloat(p.jackPot) || 0;
-        //   const currentDiamond = parseFloat(p.diamond) || 0;
-        //   const currentFlame = parseFloat(p.flame) || 0;
-        //   const bonus = calcBonus(
-        //     currentCoin,
-        //     currentJackPot,
-        //     currentDiamond,
-        //     currentFlame,
-        //     paidTable,
-        //     totalBet
-        //   );
-        //
-        //   return p.update({
-        //     coin: bonus.coin,
-        //     jackPot: bonus.jackPot,
-        //     diamond: bonus.diamond,
-        //     flame: bonus.flame
-        //   })
-        //     .then(() =>
-        //       response.handleSuccess(
-        //         {
-        //           player: p,
-        //           bonus,
-        //           paidTable
-        //         }
-        //       )
-        //     );
-        // }
+      .then(setting => {
+        if (setting) {
+          const { spin, rule } = params;
 
-        //   return p.update({
-        //     coin: bonus.coin,
-        //     jackPot: bonus.jackPot,
-        //     diamond: bonus.diamond,
-        //     flame: bonus.flame
-        //   })
-        //     .then(() =>
-        //       response.handleSuccess(
-        //         {
-        //           player: p,
-        //           bonus,
-        //           paidTable
-        //         }
-        //       )
-        //     );
-        //
-        // return Promise.resolve(response.handleError());
+          if (spin) {
+            return setting.update({ spin })
+              .then(res =>
+                response.handleSuccess(res)
+              );
+          }
+
+          if (rule) {
+            return setting.update({ rule })
+              .then(res =>
+                response.handleSuccess(res)
+              );
+          }
+        }
+
+        return Promise.resolve(response.handleError());
       });
   }
 }

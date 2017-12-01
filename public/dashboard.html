@@ -78,6 +78,7 @@
 
     <script type="text/javascript">
       const accessToken = window.localStorage['feathers-jwt'];
+      const requestHeader = { headers: { 'Authorization': accessToken } };
 
       const url = 'https://morning-brushlands-47867.herokuapp.com';
       const rest = feathers.rest;
@@ -86,14 +87,13 @@
 
       const app = feathers()
         .configure(restClient);
-      const setting = app.service('settings').find({
-        headers: { 'Authorization': accessToken }
-      });
+      const setting = app.service('settings');
 
       function init() {
         if (!accessToken) return location.href = '/login.html';
 
-        setting.then(function(result) {
+        setting.find(requestHeader)
+        .then(function(result) {
           render(result);
         }).catch(function(error) {
           console.error('Error authenticating!', error);

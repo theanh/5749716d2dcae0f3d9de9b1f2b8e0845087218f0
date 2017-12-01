@@ -17,22 +17,24 @@ function render(res) {
   $( spinPanel ).appendTo('.col1');
   $( betPanel ).appendTo('.col2');
 
-  handleFormSubmit(document.forms.spinRule);
-  handleFormSubmit(document.forms.betRule);
+  handleFormSubmit(document.forms.spinRule, 'spin', data);
+  handleFormSubmit(document.forms.betRule, 'rule', data);
 }
 
 function renderSpin(data) {
   const spins = parseObjectToArray(data.spin);
+
   return renderTmpl('spin-tmpl', spins);
 }
 
 function renderBet(data) {
   const rules = parseObjectToArray(data.rule);
+
   return renderTmpl('rule-tmpl', rules);
 }
 
 // Events handling.
-function handleFormSubmit(form) {
+function handleFormSubmit(form, type, record) {
   form.addEventListener('submit', e => {
     e.preventDefault();
     const obj ={};
@@ -41,7 +43,10 @@ function handleFormSubmit(form) {
       if (item.name) obj[item.name] = item.value;
     }
 
-    console.log(obj);
+    return setting.update(record.id, {[type]: obj}, requestHeader)
+      .then(res => {
+        if ('ok' === res.status) alert('Updated successfully.');
+      });
   });
 }
 
