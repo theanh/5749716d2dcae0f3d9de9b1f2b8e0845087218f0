@@ -10,48 +10,53 @@ class Service {
   }
 
   get (uuid, params) {
-    const paidTable = resolveBet();
-
     const { query: { totalBet } } = params;
     const sequelizeClient = this.app.get('sequelizeClient');
-    const { players } = sequelizeClient.models;
+    const { settings, players } = sequelizeClient.models;
 
-    return players
-      .findOne({ where: { uuid }})
-      .then(p => {
+    return settings.findOne()
+      .then(setting => {
+        if (!setting) return Promise.resolve(response.handleError());
 
-        if (p) {
-          const currentCoin = parseFloat(p.coin) || 0;
-          const currentJackPot = parseFloat(p.jackPot) || 0;
-          const currentDiamond = parseFloat(p.diamond) || 0;
-          const currentFlame = parseFloat(p.flame) || 0;
-          const bonus = calcBonus(
-            currentCoin,
-            currentJackPot,
-            currentDiamond,
-            currentFlame,
-            paidTable,
-            totalBet
-          );
+        const paidTable = resolveBet(setting.dataValues);
+        return players
+          .findOne({ where: { uuid }})
+          .then(p => {
 
-          return p.update({
-            coin: bonus.coin,
-            jackPot: bonus.jackPot,
-            diamond: bonus.diamond,
-            flame: bonus.flame
-          })
-            .then(() =>
-              response.handleSuccess(
-                {
-                  player: p,
-                  bonus,
-                  paidTable
-                }
-              )
-            );
-        }
+            if (p) {
+              const currentCoin = parseFloat(p.coin) || 0;
+              const currentJackPot = parseFloat(p.jackPot) || 0;
+              const currentDiamond = parseFloat(p.diamond) || 0;
+              const currentFlame = parseFloat(p.flame) || 0;
+              const bonus = calcBonus(
+                setting.dataValues,
+                currentCoin,
+                currentJackPot,
+                currentDiamond,
+                currentFlame,
+                paidTable,
+                totalBet
+              );
 
-        return Promise.resolve(response.handleError());
+              return p.update({
+                coin: bonus.coin,
+                jackPot: bonus.jackPot,
+                diamond: bonus.diamond,
+                flame: bonus.flame
+              })
+                .then(() =>
+                  response.handleSuccess(
+                    {
+                      player: p,
+                      bonus,
+                      paidTable
+                    }
+                  )
+                );
+            }
+
+            return Promise.resolve(response.handleError());
+          });
       });
   }
 }

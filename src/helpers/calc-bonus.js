@@ -6,6 +6,7 @@ const {MAXIMUM_OF_FLAME} = require('../constants');
 /**
  * Calculate bonuses of user.
  *
+ * @param Object setting
  * @param float currentCoin
  * @param float currentJackPot
  * @param float currentDiamond
@@ -15,6 +16,7 @@ const {MAXIMUM_OF_FLAME} = require('../constants');
  * @return Object
  */
 function calcBonus(
+  setting,
   currentCoin,
   currentJackPot,
   currentDiamond,
@@ -26,11 +28,11 @@ function calcBonus(
   const bet = parseFloat(totalBet) || 0;
 
   // @TODO: need to find the rule of calculate bonus on bet amount.
-  const paidAmount = resolvePaidTable(paidTable);
+  const paidAmount = resolvePaidTable(setting, paidTable);
   const totalBonus = bet + paidAmount;
 
-  const receivedJackPot = calcJackPot(totalBonus);
-  const receivedDiamond = calcDiamond(totalBonus);
+  const receivedJackPot = calcJackPot(setting, totalBonus);
+  const receivedDiamond = calcDiamond(setting, totalBonus);
 
   const remainedBonus = totalBonus - (receivedDiamond + receivedJackPot);
 
@@ -41,7 +43,7 @@ function calcBonus(
   // @TODO: need to find the rule of adding flame.
   flame = currentFlame + 1;
 
-  if (MAXIMUM_OF_FLAME === flame) {
+  if ((setting.maximumOfFlame || MAXIMUM_OF_FLAME) === flame) {
     coin += jackPot;
     jackPot = 0;
     flame = 0;

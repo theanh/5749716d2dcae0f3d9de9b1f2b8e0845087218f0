@@ -11,20 +11,22 @@ function countItemInArray(arr) {
   return counts;
 }
 
-function resolvePaidRow(columns) {
+function resolvePaidRow({paidTable}, columns) {
+  const awardedTable = paidTable || PAID_TABLE;
   let pointAwardedPerRow = 0;
+
   const countOfItems = countItemInArray(columns);
   Object.keys(countOfItems).forEach((countOfItem, count) => {
-    pointAwardedPerRow += PAID_TABLE[countOfItem][`${count}`] || 0;
+    pointAwardedPerRow += awardedTable[countOfItem][`${count}`] || 0;
   });
 
   return pointAwardedPerRow;
 }
 
-function resolvePaidTable(paidTable) {
-  const pointAwardedPerRow1 = resolvePaidRow(paidTable['row1']);
-  const pointAwardedPerRow2 = resolvePaidRow(paidTable['row2']);
-  const pointAwardedPerRow3 = resolvePaidRow(paidTable['row3']);
+function resolvePaidTable(setting, paidTable) {
+  const pointAwardedPerRow1 = resolvePaidRow(setting, paidTable['row1']);
+  const pointAwardedPerRow2 = resolvePaidRow(setting, paidTable['row2']);
+  const pointAwardedPerRow3 = resolvePaidRow(setting, paidTable['row3']);
 
   return pointAwardedPerRow1 + pointAwardedPerRow2 + pointAwardedPerRow3;
 }

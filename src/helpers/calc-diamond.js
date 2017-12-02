@@ -1,7 +1,8 @@
 const {PERCENTAGE_FOR_DIAMOND} = require('../constants');
 
-function calcDiamond(totalBonus) {
-  return (parseFloat(totalBonus) || 0) * PERCENTAGE_FOR_DIAMOND;
+function calcDiamond({percentageForJackpot}, totalBonus) {
+  return (parseFloat(totalBonus) || 0)
+    * (percentageForJackpot || PERCENTAGE_FOR_DIAMOND);
 }
 
 module.exports = calcDiamond;

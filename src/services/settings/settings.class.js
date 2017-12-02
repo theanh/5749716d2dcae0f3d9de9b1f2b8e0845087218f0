@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 const response = require('../../helpers/response');
-const calcBonus = require('../../helpers/calc-bonus');
-const resolveBet = require('../../helpers/bet');
 
 class Service {
   constructor (options) {
@@ -18,8 +16,6 @@ class Service {
   }
 
   update(id, params) {
-    const paidTable = resolveBet();
-
     const { Model } = this.options;
 
     return Model

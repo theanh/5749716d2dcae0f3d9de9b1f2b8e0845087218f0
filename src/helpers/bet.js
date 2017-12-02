@@ -34,9 +34,13 @@ function generatePaidTableByRule(ruleNumber = 1) {
   }
 }
 
-function resolveBet() {
+function resolveBet(setting) {
   let paidTable = {};
-  const betResult = randomChance();
+  const { rule, chanceOfWinning } = setting;
+  let chanceTable = rule;
+  chanceTable[0] = 1 - parseFloat(chanceOfWinning);
+
+  const betResult = randomChance(chanceTable);
 
   switch (`${betResult}`) {
   case '1':

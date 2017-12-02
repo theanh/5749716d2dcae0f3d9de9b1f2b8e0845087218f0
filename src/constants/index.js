@@ -17,7 +17,7 @@ const SPIN = {
   500: 0.025
 };
 
-const RULES = {
+const CHANCE_TABLE = {
   0: 0.6, // No win
   1: 0.1,
   2: 0.1,
@@ -98,6 +98,6 @@ module.exports = {
   PERCENTAGE_FOR_DIAMOND,
   MAXIMUM_OF_FLAME,
   SPIN,
-  RULES,
+  CHANCE_TABLE,
   PAID_TABLE
 };

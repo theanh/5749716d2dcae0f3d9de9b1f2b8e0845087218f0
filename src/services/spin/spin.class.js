@@ -10,20 +10,24 @@ class Service {
 
   get (uuid, params) {
     const sequelizeClient = this.app.get('sequelizeClient');
-    const { players } = sequelizeClient.models;
+    const { settings, players } = sequelizeClient.models;
 
-    return players
-      .findOne({ where: { uuid }})
-      .then(p => {
+    return settings.findOne()
+      .then(setting => {
+        if (!setting) return Promise.resolve(response.handleError());
 
-        if (p) {
-          const spun = parseFloat(resolveSpin()) * 1000;
-          const currentCoin = parseFloat(p.coin) || 0;
-          return p.update({ coin: currentCoin + spun })
-            .then(() => response.handleSuccess({ player: p, spun }));
-        }
+        return players
+          .findOne({ where: { uuid }})
+          .then(p => {
+            if (p) {
+              const spun = parseFloat(resolveSpin(setting.dataValues.spin)) * 1000;
+              const currentCoin = parseFloat(p.coin) || 0;
+              return p.update({ coin: currentCoin + spun })
+                .then(() => response.handleSuccess({ player: p, spun }));
+            }
 
-        return Promise.resolve(response.handleError());
+            return Promise.resolve(response.handleError());
+          });
       });
   }
 }

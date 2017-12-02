@@ -1,8 +1,8 @@
 const {weightedRand} = require('./random');
-const {RULES} = require('../constants');
+const {CHANCE_TABLE} = require('../constants');
 
-function randomChance() {
-  const generate = weightedRand(RULES);
+function randomChance({rule}) {
+  const generate = weightedRand(rule || CHANCE_TABLE);
 
   return generate();
 }
