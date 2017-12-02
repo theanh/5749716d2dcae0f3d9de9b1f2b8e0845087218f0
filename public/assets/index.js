@@ -13,18 +13,27 @@ function render(res) {
 
   const spinPanel = renderSpin(data);
   const betPanel = renderBet(data);
+  const chancePanel = renderChances(data);
 
-  $( spinPanel ).appendTo('.col1');
-  $( betPanel ).appendTo('.col2');
+  $( spinPanel ).appendTo('.colSpin');
+  $( betPanel ).appendTo('.colRule');
+  $( chancePanel ).appendTo('.colChance');
 
   handleFormSubmit(document.forms.spinRule, 'spin', data);
   handleFormSubmit(document.forms.betRule, 'rule', data);
+  handleFormSubmit(document.forms.chanceOfWinning, 'chanceOfWinning', data);
 }
 
 function renderSpin(data) {
   const spins = parseObjectToArray(data.spin);
 
   return renderTmpl('spin-tmpl', spins);
+}
+
+function renderChances(data) {
+  const chance = { label: 'chance', value: data.chanceOfWinning};
+
+  return renderTmpl('chances-tmpl', chance);
 }
 
 function renderBet(data) {

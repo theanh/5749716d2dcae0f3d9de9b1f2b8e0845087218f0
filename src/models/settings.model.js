@@ -29,6 +29,10 @@ module.exports = function (app) {
     maximumOfFlame: {
       type: DataTypes.INTEGER,
       defaultValue: 20
+    },
+    chanceOfWinning: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0.4
     }
   }, {
     hooks: {
