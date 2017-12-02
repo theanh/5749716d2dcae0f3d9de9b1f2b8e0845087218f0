@@ -46,7 +46,7 @@ function generatePaidTableByRule(ruleNumber = 1) {
 function resolveBet(setting) {
   const { rule, chanceOfWinning } = setting;
 
-  if (!isWin(parseFloat(chanceOfWinning)))
+  if ('0' === isWin(parseFloat(chanceOfWinning)))
     return {
       winningRule: -1,
       paidTable: generatePaidTable()
