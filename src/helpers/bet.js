@@ -46,7 +46,11 @@ function generatePaidTableByRule(ruleNumber = 1) {
 function resolveBet(setting) {
   const { rule, chanceOfWinning } = setting;
 
-  if (!isWin(parseFloat(chanceOfWinning))) return generatePaidTable();
+  if (!isWin(parseFloat(chanceOfWinning)))
+    return {
+      winningRule: -1,
+      paidTable: generatePaidTable()
+    };
 
   let paidTable = {};
   const winningRule = randomChance(rule);
