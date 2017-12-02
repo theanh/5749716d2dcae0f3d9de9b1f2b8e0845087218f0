@@ -1,3 +1,4 @@
+const isWin = require('./is-win');
 const randomChance = require('./random-chance');
 const {weightedRand} = require('./random');
 
@@ -25,24 +26,35 @@ function generatePaidTableByRule(ruleNumber = 1) {
   const row2 = [generate(), generate(), generate(), generate(), generate()];
 
   switch (ruleNumber) {
-  case 2:
+  case 0:
+    return { row1: pingoRow, row2: row1, row3: row2 };
+  case 1:
     return { row1, row2: pingoRow, row3: row2 };
-  case 3:
+  case 2:
     return { row1, row2, row3: pingoRow };
+  case 3:
+    return {
+      row1: [generate(), generate(), pingoItem, generate(), generate()],
+      row2: [generate(), pingoItem, generate(), pingoItem, generate()],
+      row3: [pingoItem, generate(), generate(), generate(), pingoItem]
+    };
   default:
     return { row1: pingoRow, row2: row1, row3: row2 };
   }
 }
 
 function resolveBet(setting) {
-  let paidTable = {};
   const { rule, chanceOfWinning } = setting;
-  let chanceTable = rule;
-  chanceTable[0] = 1 - parseFloat(chanceOfWinning);
 
-  const betResult = randomChance(chanceTable);
+  if (!isWin(parseFloat(chanceOfWinning))) return generatePaidTable();
 
-  switch (`${betResult}`) {
+  let paidTable = {};
+  const winningRule = randomChance(rule);
+
+  switch (`${winningRule}`) {
+  case '0':
+    paidTable = generatePaidTableByRule(0);
+    break;
   case '1':
     paidTable = generatePaidTableByRule(1);
     break;
@@ -56,7 +68,7 @@ function resolveBet(setting) {
     paidTable = generatePaidTable();
   }
 
-  return paidTable;
+  return {winningRule, paidTable};
 }
 
 module.exports = resolveBet;
