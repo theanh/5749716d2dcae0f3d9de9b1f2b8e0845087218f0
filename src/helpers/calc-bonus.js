@@ -1,6 +1,7 @@
 const resolvePaidTable = require('./resolve-paid-table');
 const calcJackPot = require('./calc-jackpot');
 const calcDiamond = require('./calc-diamond');
+const calcBonusState = require('./calc-bonus-state');
 const {MAXIMUM_OF_FLAME} = require('../constants');
 
 /**
@@ -27,8 +28,12 @@ function calcBonus(
   let coin, jackPot, diamond, flame;
   const bet = parseFloat(totalBet) || 0;
 
-  // @TODO: need to find the rule of calculate bonus on bet amount.
-  const paidAmount = resolvePaidTable(setting, paidTable);
+  const {
+    paidAmount,
+    isBonus,
+    isDragonWill,
+    freeSpin
+  } = resolvePaidTable(setting, paidTable);
   const totalBonus = bet + paidAmount;
 
   const receivedJackPot = calcJackPot(setting, totalBonus);
@@ -49,7 +54,13 @@ function calcBonus(
     flame = 0;
   }
 
-  return { coin, jackPot, diamond, flame };
+  return {
+    coin,
+    jackPot,
+    diamond,
+    flame,
+    state: calcBonusState(isBonus, isDragonWill, freeSpin)
+  };
 }
 
 module.exports = calcBonus;
