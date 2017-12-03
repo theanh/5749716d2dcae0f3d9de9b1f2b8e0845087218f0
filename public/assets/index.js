@@ -14,10 +14,12 @@ function render(res) {
   const spinPanel = renderSpin(data);
   const betPanel = renderBet(data);
   const chancePanel = renderChances(data);
+  const items = renderChancesOfItemAppearance(data);
 
   $( spinPanel ).appendTo('.colSpin');
   $( betPanel ).appendTo('.colRule');
   $( chancePanel ).appendTo('.colChance');
+  $( items ).appendTo('.colItems');
 
   // Add slider
   $('.slider').slider({
@@ -28,6 +30,7 @@ function render(res) {
 
   handleFormSubmit(document.forms.spinRule, 'spin', data);
   handleFormSubmit(document.forms.betRule, 'rule', data);
+  handleFormSubmit(document.forms.chanceOfDisplayingItem, 'chanceOfDisplayingItem', data);
   handleFormSubmit(document.forms.chanceOfWinning, 'chanceOfWinning', data);
 }
 
@@ -41,6 +44,12 @@ function renderChances(data) {
   const chance = { label: 'chance', value: data.chanceOfWinning};
 
   return renderTmpl('chances-tmpl', chance);
+}
+
+function renderChancesOfItemAppearance(data) {
+  const items = parseObjectToArray(data.chanceOfDisplayingItem);
+
+  return renderTmpl('chances-of-item-tmpl', items);
 }
 
 function renderBet(data) {

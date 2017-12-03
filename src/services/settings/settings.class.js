@@ -22,7 +22,12 @@ class Service {
       .findOne({ where: { id }})
       .then(setting => {
         if (setting) {
-          const { spin, rule, chanceOfWinning } = params;
+          const {
+            spin,
+            rule,
+            chanceOfWinning,
+            chanceOfDisplayingItem
+          } = params;
 
           if (spin) {
             return setting.update({ spin })
@@ -35,6 +40,13 @@ class Service {
             return setting.update({
               chanceOfWinning: chanceOfWinning.chance
             })
+              .then(res =>
+                response.handleSuccess(res)
+              );
+          }
+
+          if (chanceOfDisplayingItem) {
+            return setting.update({ chanceOfDisplayingItem })
               .then(res =>
                 response.handleSuccess(res)
               );
