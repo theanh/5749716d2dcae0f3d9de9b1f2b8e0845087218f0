@@ -18,7 +18,12 @@ class Service {
       .then(setting => {
         if (!setting) return Promise.resolve(response.handleError());
 
-        const {winningRule, paidTable, highlight} = resolveBet(setting.dataValues);
+        const {
+          winningRule,
+          winningItem,
+          paidTable,
+          highlight
+        } = resolveBet(setting.dataValues);
 
         return players
           .findOne({ where: { uuid }})
@@ -52,7 +57,8 @@ class Service {
                       bonus,
                       paidTable,
                       highlight,
-                      winningRule
+                      winningRule,
+                      winningItem
                     }
                   )
                 );

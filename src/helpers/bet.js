@@ -55,6 +55,7 @@ function generateBetResult(winningRule = 0) {
 
   return {
     winningRule,
+    winningItem: pingoItem,
     highlight,
     paidTable
   };
@@ -66,6 +67,7 @@ function resolveBet(setting) {
   if ('0' === isWin(parseFloat(chanceOfWinning)))
     return {
       winningRule: -1,
+      winningItem: -1,
       paidTable: generatePaidTable(),
       highlight: []
     };
