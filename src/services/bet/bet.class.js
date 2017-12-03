@@ -30,16 +30,9 @@ class Service {
           .then(p => {
 
             if (p) {
-              const currentCoin = parseFloat(p.coin) || 0;
-              const currentJackPot = parseFloat(p.jackPot) || 0;
-              const currentDiamond = parseFloat(p.diamond) || 0;
-              const currentFlame = parseFloat(p.flame) || 0;
               const bonus = calcBonus(
                 setting.dataValues,
-                currentCoin,
-                currentJackPot,
-                currentDiamond,
-                currentFlame,
+                p,
                 paidTable,
                 totalBet
               );
@@ -48,7 +41,8 @@ class Service {
                 coin: bonus.coin,
                 jackPot: bonus.jackPot,
                 diamond: bonus.diamond,
-                flame: bonus.flame
+                flame: bonus.flame,
+                freeSpin: bonus.freeSpin
               })
                 .then(() =>
                   response.handleSuccess(

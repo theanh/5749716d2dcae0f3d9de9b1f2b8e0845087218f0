@@ -49,6 +49,11 @@ module.exports = function (app) {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 1
+    },
+    freeSpin: {
+      type: DataTypes.SMALLINT,
+      allowNull: true,
+      defaultValue: 0
     }
   }, {
     hooks: {
