@@ -25,7 +25,7 @@ function calcBonus(
   paidTable,
   totalBet = 0
 ) {
-  let coin, jackPot, diamond, flame;
+  let coin, jackPot, diamond, flame = currentFlame;
   const bet = parseFloat(totalBet) || 0;
 
   const {
@@ -45,8 +45,7 @@ function calcBonus(
   diamond = currentDiamond + receivedDiamond;
   jackPot = currentJackPot + receivedJackPot;
 
-  // @TODO: need to find the rule of adding flame.
-  flame = currentFlame + 1;
+  if (isDragonWill) flame = currentFlame + 1;
 
   if ((setting.maximumOfFlame || MAXIMUM_OF_FLAME) === flame) {
     coin += jackPot;
