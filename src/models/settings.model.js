@@ -18,6 +18,10 @@ module.exports = function (app) {
       type: DataTypes.JSON,
       allowNull: true
     },
+    chanceOfDisplayingItem: {
+      type: DataTypes.JSON,
+      allowNull: true
+    },
     percentageForJackpot: {
       type: DataTypes.FLOAT,
       defaultValue: 0.01
