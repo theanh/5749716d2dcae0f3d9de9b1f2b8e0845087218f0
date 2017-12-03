@@ -20,11 +20,11 @@ module.exports = function (app) {
     },
     percentageForJackpot: {
       type: DataTypes.FLOAT,
-      defaultValue: 0.75
+      defaultValue: 0.01
     },
     percentageForDiamond: {
       type: DataTypes.FLOAT,
-      defaultValue: 0.25
+      defaultValue: 0.2
     },
     maximumOfFlame: {
       type: DataTypes.INTEGER,

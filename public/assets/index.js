@@ -19,6 +19,13 @@ function render(res) {
   $( betPanel ).appendTo('.colRule');
   $( chancePanel ).appendTo('.colChance');
 
+  // Add slider
+  $('.slider').slider({
+    formatter: function(value) {
+      return 'Current value: ' + value;
+    }
+  });
+
   handleFormSubmit(document.forms.spinRule, 'spin', data);
   handleFormSubmit(document.forms.betRule, 'rule', data);
   handleFormSubmit(document.forms.chanceOfWinning, 'chanceOfWinning', data);

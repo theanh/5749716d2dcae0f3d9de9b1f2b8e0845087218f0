@@ -36,7 +36,7 @@ function calcBonus(
 
   const paidTableAfterResolved = resolvePaidTable(setting, paidTable);
   const { paidAmount } = paidTableAfterResolved;
-  const totalBonus = bet + paidAmount;
+  const totalBonus = Math.floor(bet + (bet * 0.15) * paidAmount);
 
   const receivedJackPot = calcJackPot(setting, totalBonus);
   const receivedDiamond = calcDiamond(setting, totalBonus);
