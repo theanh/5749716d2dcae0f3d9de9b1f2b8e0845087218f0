@@ -19,28 +19,45 @@ function generatePaidTable() {
   return { row1, row2, row3 };
 }
 
-function generatePaidTableByRule(ruleNumber = 1) {
+function generateBetResult(winningRule = 0) {
+  let paidTable = {};
+  let highlight = [];
   const pingoItem = generate();
   const pingoRow = [pingoItem, pingoItem, pingoItem, pingoItem, pingoItem];
   const row1 = [generate(), generate(), generate(), generate(), generate()];
   const row2 = [generate(), generate(), generate(), generate(), generate()];
 
-  switch (ruleNumber) {
-  case 0:
-    return { row1: pingoRow, row2: row1, row3: row2 };
-  case 1:
-    return { row1, row2: pingoRow, row3: row2 };
-  case 2:
-    return { row1, row2, row3: pingoRow };
-  case 3:
-    return {
+  switch (`${winningRule}`) {
+  case '0':
+    highlight = [ '00', '01', '02', '03', '04' ];
+    paidTable = { row1: pingoRow, row2: row1, row3: row2 };
+    break;
+  case '1':
+    highlight = [ '10', '11', '12', '13', '14' ];
+    paidTable = { row1, row2: pingoRow, row3: row2 };
+    break;
+  case '2':
+    highlight = [ '20', '21', '22', '23', '24' ];
+    paidTable = { row1, row2, row3: pingoRow };
+    break;
+  case '3':
+    highlight = [ '20', '11', '02', '13', '24' ];
+    paidTable = {
       row1: [generate(), generate(), pingoItem, generate(), generate()],
       row2: [generate(), pingoItem, generate(), pingoItem, generate()],
       row3: [pingoItem, generate(), generate(), generate(), pingoItem]
     };
+    break;
   default:
-    return { row1: pingoRow, row2: row1, row3: row2 };
+    highlight = [ '00', '01', '02', '03', '04' ];
+    paidTable = { row1: pingoRow, row2: row1, row3: row2 };
   }
+
+  return {
+    winningRule,
+    highlight,
+    paidTable
+  };
 }
 
 function resolveBet(setting) {
@@ -49,30 +66,13 @@ function resolveBet(setting) {
   if ('0' === isWin(parseFloat(chanceOfWinning)))
     return {
       winningRule: -1,
-      paidTable: generatePaidTable()
+      paidTable: generatePaidTable(),
+      highlight: []
     };
 
-  let paidTable = {};
   const winningRule = randomChance(rule);
 
-  switch (`${winningRule}`) {
-  case '0':
-    paidTable = generatePaidTableByRule(0);
-    break;
-  case '1':
-    paidTable = generatePaidTableByRule(1);
-    break;
-  case '2':
-    paidTable = generatePaidTableByRule(2);
-    break;
-  case '3':
-    paidTable = generatePaidTableByRule(3);
-    break;
-  default:
-    paidTable = generatePaidTable();
-  }
-
-  return {winningRule, paidTable};
+  return generateBetResult(winningRule);
 }
 
 module.exports = resolveBet;
