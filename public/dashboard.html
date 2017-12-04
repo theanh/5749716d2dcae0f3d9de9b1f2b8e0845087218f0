@@ -119,9 +119,9 @@
                     data-slider-id="exSpin{{@index}}Slider"
                     type="text"
                     name="{{label}}"
-                    data-slider-min="0.05"
-                    data-slider-max="0.9"
-                    data-slider-step="0.05"
+                    data-slider-min="0"
+                    data-slider-max="1"
+                    data-slider-step="0.1"
                     data-slider-value="{{value}}"
                   />
                   <!-- <input type="text" name="{{label}}" class="form-control" value="{{value}}" /> -->
@@ -153,9 +153,9 @@
                       data-slider-id="exRule{{@index}}Slider"
                       type="text"
                       name="{{label}}"
-                      data-slider-min="0.05"
-                      data-slider-max="0.9"
-                      data-slider-step="0.05"
+                      data-slider-min="0"
+                      data-slider-max="1"
+                      data-slider-step="0.1"
                       data-slider-value="{{value}}"
                     />
                   <!-- <input type="text" name="{{label}}" class="form-control" value="{{value}}" /> -->
@@ -177,6 +177,7 @@
       const requestHeader = { headers: { 'Authorization': accessToken } };
 
       const url = 'https://morning-brushlands-47867.herokuapp.com';
+      const loginPage = '/login.html';
       const rest = feathers.rest;
 
       const restClient = rest(url).fetch(window.fetch.bind(window));
@@ -186,14 +187,14 @@
       const setting = app.service('settings');
 
       function init() {
-        if (!accessToken) return location.href = '/login.html';
+        if (!accessToken) return location.href = loginPage;
 
         setting.find(requestHeader)
         .then(function(result) {
           render(result);
         }).catch(function(error) {
           console.error('Error authenticating!', error);
-          return location.href = '/login.html';
+          return location.href = loginPage;
         });
       }
 

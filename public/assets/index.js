@@ -18,20 +18,20 @@ function render(res) {
 
   $( spinPanel ).appendTo('.colSpin');
   $( betPanel ).appendTo('.colRule');
-  $( chancePanel ).appendTo('.colChance');
-  $( items ).appendTo('.colItems');
+  // $( chancePanel ).appendTo('.colChance');
+  // $( items ).appendTo('.colItems');
 
   // Add slider
   $('.slider').slider({
     formatter: function(value) {
-      return 'Current value: ' + value;
+      return `Current value: ${parseFloat(value) * 100}%`;
     }
   });
 
   handleFormSubmit(document.forms.spinRule, 'spin', data);
   handleFormSubmit(document.forms.betRule, 'rule', data);
-  handleFormSubmit(document.forms.chanceOfDisplayingItem, 'chanceOfDisplayingItem', data);
-  handleFormSubmit(document.forms.chanceOfWinning, 'chanceOfWinning', data);
+  // handleFormSubmit(document.forms.chanceOfDisplayingItem, 'chanceOfDisplayingItem', data);
+  // handleFormSubmit(document.forms.chanceOfWinning, 'chanceOfWinning', data);
 }
 
 function renderSpin(data) {
