@@ -32,6 +32,7 @@ Simply run `npm test` and all your tests in the `test/` directory will be run.
 $ NODE_ENV=production node_modules/.bin/sequelize db:migrate
 $ NODE_ENV=production node_modules/.bin/sequelize db:seed:undo:all
 $ NODE_ENV=production node_modules/.bin/sequelize db:seed:all
+$ NODE_ENV=production node_modules/.bin/sequelize db:seed --seed {seed paths}
 ```
 
 ## Scaffolding

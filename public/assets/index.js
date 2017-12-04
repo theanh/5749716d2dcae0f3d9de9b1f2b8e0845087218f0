@@ -3,6 +3,25 @@
 
 const $ = window.$;
 const Handlebars = window.Handlebars;
+Handlebars.registerHelper('renderRule', (context, options) => {
+  switch (`${context}`) {
+  case '100':
+    return 'Trúng thưởng DRAGON WILD';
+  case '200':
+    return 'Trúng thưởng 5 free spin';
+  case '300':
+    return 'Trúng thưởng 10 free spin';
+  case '400':
+    return 'Trúng thưởng 25 free spin';
+  case '500':
+    return 'Trúng thưởng BONUS SCATTER';
+  case '-1':
+    return 'Không trúng thưởng';
+  default:
+    return `Trúng thưởng Rule #${parseInt(context, 10) + 1}`;
+  }
+});
+
 const root = '.root';
 
 // Template rendering.
