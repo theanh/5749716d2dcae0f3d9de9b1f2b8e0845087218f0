@@ -35,6 +35,11 @@ $ NODE_ENV=production node_modules/.bin/sequelize db:seed:all
 $ NODE_ENV=production node_modules/.bin/sequelize db:seed --seed {seed paths}
 ```
 
+## Starting the server
+```
+$ pm2 start ecosystem.config.js --env production
+```
+
 ## Scaffolding
 
 Feathers has a powerful command line interface. Here are a few things it can do:
