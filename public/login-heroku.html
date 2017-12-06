@@ -13,7 +13,7 @@
       const rest = feathers.rest;
       const authentication = feathers.authentication;
 
-      const restClient = rest('http://128.199.193.87').superagent(superagent);
+      const restClient = rest('https://morning-brushlands-47867.herokuapp.com').superagent(superagent);
 
       const app = feathers()
         .configure(restClient)
