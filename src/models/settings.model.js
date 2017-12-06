@@ -37,6 +37,14 @@ module.exports = function (app) {
     chanceOfWinning: {
       type: DataTypes.FLOAT,
       defaultValue: 0.4
+    },
+    levelSetting: {
+      type: DataTypes.JSON,
+      allowNull: true
+    },
+    defaultCoin: {
+      type: DataTypes.INTEGER,
+      defaultValue: 10000
     }
   }, {
     hooks: {

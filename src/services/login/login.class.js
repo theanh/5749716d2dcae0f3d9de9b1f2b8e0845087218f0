@@ -9,36 +9,45 @@ class Service {
   find (params) {
     const { query: { deviceId, facebookId } } = params;
     const sequelizeClient = this.app.get('sequelizeClient');
-    const { players } = sequelizeClient.models;
+    const { players, settings } = sequelizeClient.models;
 
-    if (facebookId) {
-      return players
-        .findOne({ where: { facebookId }})
-        .then(p => {
-          if (!p) {
-            return players
-              .findOne({ where: { deviceId }})
-              .then(p => {
-                if (!p) return players.create({ deviceId, facebookId });
+    return settings.findOne()
+      .then(setting => {
+        if (!setting) return Promise.resolve(response.handleError());
 
-                return p.update({ facebookId })
-                  .then(() => response.handleSuccess(p));
-              });
-          }
+        const defaultCoin = parseFloat(setting.dataValues.defaultCoin);
 
-          return response.handleSuccess(p);
-        });
-    }
+        if (facebookId) {
+          return players
+            .findOne({ where: { facebookId }})
+            .then(p => {
+              if (!p) {
+                return players
+                  .findOne({ where: { deviceId }})
+                  .then(p => {
+                    if (!p) {
+                      return players.create({ deviceId, facebookId, coin: defaultCoin });
+                    }
 
-    return players
-      .findOne({ where: { deviceId }})
-      .then(p => {
-        if (!p) {
-          return players.create({ deviceId })
-            .then(p => response.handleSuccess(p));
+                    return p.update({ facebookId })
+                      .then(() => response.handleSuccess(p));
+                  });
+              }
+
+              return response.handleSuccess(p);
+            });
         }
 
-        return response.handleSuccess(p);
+        return players
+          .findOne({ where: { deviceId }})
+          .then(p => {
+            if (!p) {
+              return players.create({ deviceId, coin: defaultCoin })
+                .then(p => response.handleSuccess(p));
+            }
+
+            return response.handleSuccess(p);
+          });
       });
   }
 }

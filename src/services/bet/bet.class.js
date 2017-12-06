@@ -42,7 +42,8 @@ class Service {
                 jackPot: bonus.jackPot,
                 diamond: bonus.diamond,
                 flame: bonus.flame,
-                freeSpin: bonus.freeSpin
+                freeSpin: bonus.freeSpin,
+                level: bonus.levelUp ? parseInt(p.level, 10) + 1 : parseInt(p.level, 10)
               })
                 .then(() =>
                   response.handleSuccess(
@@ -52,7 +53,8 @@ class Service {
                       paidTable,
                       highlight,
                       winningRule,
-                      winningItem
+                      winningItem,
+                      levelUp: bonus.levelUp
                     }
                   )
                 );

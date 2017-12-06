@@ -12,8 +12,7 @@ function generatePaidTable(chanceOfDisplayingItem) {
 }
 
 function generateBetResult(chanceOfDisplayingItem, winningRule = -1) {
-  let paidTable = {};
-  let highlight = [];
+  let paidTable = {}, highlight = [];
   const generate = randomItem(chanceOfDisplayingItem);
   let pingoItem = generate();
   const pingoRow = [pingoItem, pingoItem, pingoItem, pingoItem, pingoItem];

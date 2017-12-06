@@ -2,6 +2,7 @@ const resolvePaidTable = require('./resolve-paid-table');
 const calcJackPot = require('./calc-jackpot');
 const calcDiamond = require('./calc-diamond');
 const calcBonusState = require('./calc-bonus-state');
+const isLevelUp = require('./is-level-up');
 const {MAXIMUM_OF_FLAME} = require('../constants');
 
 /**
@@ -31,7 +32,8 @@ function calcBonus(
     diamond,
     flame = currentFlame,
     bonusState = -1,
-    remainedFreeSpin = currentFreeSpin;
+    remainedFreeSpin = currentFreeSpin,
+    levelUp = false;
   const bet = parseFloat(totalBet) || 0;
 
   const paidTableAfterResolved = resolvePaidTable(setting, paidTable);
@@ -65,14 +67,17 @@ function calcBonus(
   diamond = currentDiamond + receivedDiamond;
   jackPot = currentJackPot + receivedJackPot;
 
+  levelUp = isLevelUp(setting.levelSetting, player, diamond);
+
   return {
     coin,
     coinPlus,
     jackPot,
-    diamond,
+    diamond: levelUp ? 0 : diamond,
     flame,
     freeSpin: remainedFreeSpin,
-    state: bonusState
+    state: bonusState,
+    levelUp
   };
 }
 
