@@ -54,6 +54,7 @@ class Service {
                       highlight,
                       winningRule,
                       winningItem,
+                      wonJackPot: bonus.wonJackPot,
                       levelUp: bonus.levelUp
                     }
                   )

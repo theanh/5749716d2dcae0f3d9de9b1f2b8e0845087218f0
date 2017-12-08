@@ -33,6 +33,10 @@ function calcBonus(
     flame = currentFlame,
     bonusState = -1,
     remainedFreeSpin = currentFreeSpin,
+    wonJackPot = {
+      status: false,
+      value: 0
+    },
     levelUp = false;
   const bet = parseFloat(totalBet) || 0;
 
@@ -54,18 +58,22 @@ function calcBonus(
 
     if (isDragonWill) flame = currentFlame + 1;
 
-    if ((setting.maximumOfFlame || MAXIMUM_OF_FLAME) === flame) {
-      coin += jackPot;
-      jackPot = 0;
-      flame = 0;
-    }
-
     bonusState = calcBonusState(isBonus, isDragonWill, freeSpin);
   }
 
   coin = currentCoin + coinPlus;
   diamond = currentDiamond + receivedDiamond;
   jackPot = currentJackPot + receivedJackPot;
+
+  if ((setting.maximumOfFlame || MAXIMUM_OF_FLAME) === flame) {
+    wonJackPot = {
+      status: true,
+      value: jackPot
+    };
+    coin += jackPot;
+    jackPot = 0;
+    flame = 0;
+  }
 
   levelUp = isLevelUp(setting.levelSetting, player, diamond);
 
@@ -77,6 +85,7 @@ function calcBonus(
     flame,
     freeSpin: remainedFreeSpin,
     state: bonusState,
+    wonJackPot,
     levelUp
   };
 }
