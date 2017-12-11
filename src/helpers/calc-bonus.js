@@ -76,6 +76,7 @@ function calcBonus(
   }
 
   levelUp = isLevelUp(setting.levelSetting, player, diamond);
+  if (levelUp) bonusState = -1;
 
   return {
     coin,
