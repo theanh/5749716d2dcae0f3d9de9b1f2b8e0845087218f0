@@ -88,9 +88,9 @@ function generateBetResult(chanceOfDisplayingItem, winningRule = -1) {
   case '500':
     highlight = [];
     paidTable = {
-      row1: [11, 11, 11, 11, 11],
-      row2: [11, 11, 11, 11, 11],
-      row3: [11, 11, 11, 11, 11]
+      row1: [generate(), 11, 11, 11, generate()],
+      row2: [generate(), 11, 11, 11, 11],
+      row3: [generate(), 11, 11, generate(), 11]
     };
     break;
 
