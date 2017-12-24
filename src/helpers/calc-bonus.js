@@ -12,6 +12,7 @@ const {MAXIMUM_OF_FLAME} = require('../constants');
  * @param Object player
  * @param array paidTable
  * @param float|0 totalBet
+ * @param winningRule|-1
  *
  * @return Object
  */
@@ -19,7 +20,8 @@ function calcBonus(
   setting,
   player,
   paidTable,
-  totalBet = 0
+  totalBet = 0,
+  winningRule = -1
 ) {
   const currentCoin = parseFloat(player.coin) || 0;
   const currentJackPot = parseFloat(player.jackPot) || 0;
@@ -40,7 +42,7 @@ function calcBonus(
     levelUp = false;
   const bet = parseFloat(totalBet) || 0;
 
-  const paidTableAfterResolved = resolvePaidTable(setting, paidTable);
+  const paidTableAfterResolved = resolvePaidTable(setting, paidTable, winningRule);
   const { paidAmount } = paidTableAfterResolved;
   const totalBonus = Math.floor(bet + (bet * 0.15) * paidAmount);
 
@@ -54,11 +56,18 @@ function calcBonus(
   } else {
     coinPlus -= bet;
     const { isBonus, isDragonWill, freeSpin } = paidTableAfterResolved;
-    remainedFreeSpin = freeSpin;
 
     if (isDragonWill) flame = currentFlame + 1;
 
-    bonusState = calcBonusState(isBonus, isDragonWill, freeSpin);
+    // Calc bonus base on winning rule
+    // bonusState = calcBonusState(
+    //   isBonus,
+    //   isDragonWill,
+    //   freeSpin
+    // );
+
+    bonusState = winningRule;
+    remainedFreeSpin = freeSpin;
   }
 
   coin = currentCoin + coinPlus;

@@ -117,10 +117,16 @@ const PAID_TABLE = {
   }
 };
 
+// const FREE_SPIN = {
+//   3: 5,
+//   4: 10,
+//   5: 25
+// };
+
 const FREE_SPIN = {
-  3: 5,
-  4: 10,
-  5: 25
+  200: 5,
+  300: 10,
+  400: 25
 };
 
 const MIN_REQUIRED_TO_GET_BONUS = 3;

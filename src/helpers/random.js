@@ -12,7 +12,7 @@ function weightedRand(spec) {
       table.push(i);
     }
   }
-
+  
   return function() {
     return table[Math.floor(Math.random() * table.length)];
   };

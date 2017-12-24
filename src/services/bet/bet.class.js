@@ -34,7 +34,8 @@ class Service {
                 setting.dataValues,
                 p,
                 paidTable,
-                totalBet
+                totalBet,
+                winningRule
               );
 
               return p.update({

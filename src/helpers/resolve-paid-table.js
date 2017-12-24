@@ -43,11 +43,14 @@ function resolvePaidRow({paidTable}, columns) {
   return {pointAwardedPerRow, isBonus, isDragonWill, scatter};
 }
 
-function resolvePaidTable(setting, paidTable) {
+function resolvePaidTable(setting, paidTable, winningRule) {
   const awardedPerRow1 = resolvePaidRow(setting, paidTable['row1']);
   const awardedPerRow2 = resolvePaidRow(setting, paidTable['row2']);
   const awardedPerRow3 = resolvePaidRow(setting, paidTable['row3']);
 
+  // freeSpin: calcFreeSpin(awardedPerRow1.scatter
+  //     + awardedPerRow2.scatter
+  //     + awardedPerRow3.scatter),
   return {
     isBonus: awardedPerRow1.isBonus
       || awardedPerRow2.isBonus
@@ -55,9 +58,7 @@ function resolvePaidTable(setting, paidTable) {
     isDragonWill: awardedPerRow1.isDragonWill
       || awardedPerRow2.isDragonWill
       || awardedPerRow3.isDragonWill,
-    freeSpin: calcFreeSpin(awardedPerRow1.scatter
-      + awardedPerRow2.scatter
-      + awardedPerRow3.scatter),
+    freeSpin: calcFreeSpin(winningRule),
     paidAmount: awardedPerRow1.pointAwardedPerRow
       + awardedPerRow2.pointAwardedPerRow
       + awardedPerRow3.pointAwardedPerRow
