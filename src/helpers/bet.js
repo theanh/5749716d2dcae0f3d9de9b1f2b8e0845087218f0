@@ -46,11 +46,11 @@ function generateBetResult(chanceOfDisplayingItem, winningRule = -1) {
 
   // Bonus DRAGON_WILD
   case '100':
-    highlight = [];
+    highlight = ['00', '00', '00', '00', '00'];
     paidTable = {
-      row1: [9, generate(), generate(), generate(), 9],
-      row2: [generate(), generate(), 9, generate(), pingoItem],
-      row3: [pingoItem, generate(), generate(), generate(), generate()]
+      row1: [5, generate(), generate(), generate(), 9],
+      row2: [5, generate(), 9, generate(), pingoItem],
+      row3: [5, generate(), generate(), generate(), generate()]
     };
     break;
 
