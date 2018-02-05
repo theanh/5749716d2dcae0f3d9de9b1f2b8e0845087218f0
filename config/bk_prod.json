@@ -1,0 +1,10 @@
+{
+  "host": "slotgame-app.feathersjs.com",
+  "port": "PORT",
+  "public": "../public/",
+  "paginate": {
+    "default": 10,
+    "max": 50
+  },
+  "postgres": "postgres://postgres:deadface@127.0.0.1:5432/slotgame"
+}
